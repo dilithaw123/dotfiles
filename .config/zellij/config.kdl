@@ -1,0 +1,10 @@
+keybinds {
+	locked {
+		bind "Alt Left" { MoveFocusOrTab "Left"; }
+		bind "Alt Right" { MoveFocusOrTab "Right"; }
+		bind "Alt Up" { MoveFocusOrTab "Up"; }
+		bind "Alt Down" { MoveFocusOrTab "Down"; }
+	}
+}
+
+default_mode "locked";
