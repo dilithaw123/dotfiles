@@ -1,11 +1,8 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    // "width": 1280, // Waybar width
-    // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode","sway/scatchpad"],
     "modules-center": ["custom/music"],
-    "spacing":8,
     "modules-right": [
     	"pulseaudio", 
 	"network",
@@ -55,8 +52,7 @@
             "critical": 15
         },
         "format": "{capacity}% {icon}",
-        "format-charging": "󰢜",
-        "format-plugged": "",
+        "format-plugged": "{capacity}% ",
         "format-alt": "{capacity}%",
 	"format-icons": ["", "", "", "", ""]
     },
