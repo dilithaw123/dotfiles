@@ -1,7 +1,7 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "modules-left": ["sway/workspaces", "sway/mode","sway/scatchpad"],
+    "modules-left": ["hyprland/workspaces", "sway/mode","sway/scatchpad"],
     "modules-center": ["custom/music"],
     "modules-right": [
     	"pulseaudio", 
@@ -58,19 +58,19 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{icon} {volume}%",
+        "format": "{icon}  {volume}%",
         "format-muted": "",
         "format-icons": {
             "default": ["", "", " "]
         },
     },
     "custom/power": {
-        "format" : "⏻ ",
+        "format" : "⏻",
 		"tooltip": false,
 		"menu": "on-click",
 		"menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
 		"menu-actions": {
-			"shutdown": "shutdown",
+			"shutdown": "systemctl poweroff",
 			"reboot": "reboot",
 			"suspend": "systemctl suspend",
 			"hibernate": "systemctl hibernate"
