@@ -69,7 +69,7 @@ return {
   },
   {
     'sainnhe/everforest',
-    enabled = true,
+    enabled = false,
     config = function()
       vim.g.everforest_background = 'hard'
       vim.cmd 'colorscheme everforest'
@@ -83,6 +83,19 @@ return {
     },
     config = function()
       vim.cmd 'colorscheme ares'
+    end,
+  },
+  {
+    'scottmckendry/cyberdream.nvim',
+    enabled = true,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('cyberdream').setup {
+        transparent = true,
+        italic_comments = true,
+      }
+      vim.cmd 'colorscheme cyberdream'
     end,
   },
 }
