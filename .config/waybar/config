@@ -1,7 +1,7 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "modules-left": ["hyprland/workspaces", "sway/mode","sway/scatchpad"],
+    "modules-left": ["sway/workspaces","sway/mode","sway/scatchpad"],
     "modules-center": ["custom/music"],
     "modules-right": [
     	"pulseaudio", 
