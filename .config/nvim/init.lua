@@ -1,4 +1,4 @@
--- Set <space> as the leader key
+-- Set <space> as the leader keymason
 -- See `:help mapleader`
 -- NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
@@ -561,6 +561,7 @@ require('mason-tool-installer').setup {
     'terraformls',
     'ols',
     'clangd',
+    'json-lsp',
   },
 }
 
@@ -579,6 +580,7 @@ local mason_servers = {
   terraformls = {},
   ols = {},
   clangd = {},
+  jsonls = {},
 }
 
 require('neodev').setup()
