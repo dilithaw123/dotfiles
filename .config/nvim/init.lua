@@ -279,6 +279,7 @@ vim.defer_fn(function()
       'html',
       'c_sharp',
       'markdown',
+      'php',
     },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -435,6 +436,7 @@ local mason_packages = {
     clangd = {},
     jsonls = {},
     astro = {},
+    phpactor = {},
   },
   formatters = {
     'gofumpt',
