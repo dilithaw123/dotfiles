@@ -63,7 +63,7 @@ require('lazy').setup({
   {
     'saghen/blink.cmp',
     dependencies = 'rafamadriz/friendly-snippets',
-    version = '0.13',
+    version = '0.13.1',
     opts = {
       keymap = { preset = 'default' },
       appearance = {
