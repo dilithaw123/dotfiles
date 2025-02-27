@@ -53,6 +53,7 @@
         },
         "format": "{capacity}% {icon}",
         "format-plugged": "{capacity}% ",
+        "format-charging": "{capacity}% ",
         "format-alt": "{capacity}%",
 	"format-icons": ["", "", "", "", ""]
     },
