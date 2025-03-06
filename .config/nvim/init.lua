@@ -82,6 +82,16 @@ require('lazy').setup({
         default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
       },
       fuzzy = { implementation = 'prefer_rust_with_warning' },
+      completion = {
+        menu = {
+          draw = {
+            columns = {
+              { 'label', 'label_description', gap = 1 },
+              { 'kind_icon', 'kind', gap = 1 },
+            },
+          },
+        },
+      },
     },
     opts_extend = { 'sources.default' },
   },
@@ -437,6 +447,7 @@ local mason_packages = {
     jsonls = {},
     astro = {},
     phpactor = {},
+    svelte = {},
   },
   formatters = {
     'gofumpt',
