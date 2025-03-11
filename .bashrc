@@ -18,3 +18,11 @@ fi
 if [[ -d "/usr/local/go/bin" ]]; then
 	PATH="$PATH:/usr/local/go/bin"
 fi
+
+if [[ -d "$HOME/.local/bin/" ]]; then
+	PATH="$PATH:$HOME/.local/bin/"
+fi
+
+if [[ -d "$HOME/.dotnet" ]]; then
+	PATH="$PATH:$HOME/.dotnet"
+fi

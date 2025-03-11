@@ -448,6 +448,7 @@ local mason_packages = {
     astro = {},
     phpactor = {},
     svelte = {},
+    omnisharp = {},
   },
   formatters = {
     'gofumpt',
