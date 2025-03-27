@@ -87,7 +87,7 @@ return {
   },
   {
     'scottmckendry/cyberdream.nvim',
-    enabled = true,
+    enabled = false,
     lazy = false,
     priority = 1000,
     config = function()
@@ -96,6 +96,15 @@ return {
         italic_comments = true,
       }
       vim.cmd 'colorscheme cyberdream'
+    end,
+  },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    enabled = true,
+    config = function()
+      vim.cmd 'colorscheme catppuccin'
     end,
   },
 }
