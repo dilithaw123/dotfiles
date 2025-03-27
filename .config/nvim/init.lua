@@ -4,9 +4,6 @@ vim.g.maplocalleader = ' '
 vim.opt.path:append '**'
 vim.opt.wildignorecase = true
 
--- [[ Install `lazy.nvim` plugin manager ]]
---    https://github.com/folke/lazy.nvim
---    `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
@@ -20,20 +17,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Configure plugins ]]
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
-  -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
-  { 'williamboman/mason.nvim', config = true },
-  'WhoIsSethDaniel/mason-tool-installer.nvim',
+  { 'williamboman/mason.nvim', config = true, dependencies = {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+  } },
   { 'j-hui/fidget.nvim', opts = {} },
   {
     'saghen/blink.cmp',
@@ -62,13 +52,10 @@ require('lazy').setup({
     },
     opts_extend = { 'sources.default' },
   },
-  -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
   {
-    -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
-      -- See `:help gitsigns.txt`
       signs = {
         add = { text = '+' },
         change = { text = '~' },
