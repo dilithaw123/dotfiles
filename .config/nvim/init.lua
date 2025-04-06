@@ -244,6 +244,7 @@ vim.defer_fn(function()
       'c_sharp',
       'markdown',
       'php',
+      'razor',
     },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -423,3 +424,11 @@ require('mason-tool-installer').setup {
 for _, server_name in ipairs(mason_packages.lsps) do
   vim.lsp.enable(server_name)
 end
+
+-- Razor files
+vim.filetype.add {
+  extension = {
+    razor = 'razor',
+    cshtml = 'razor',
+  },
+}
