@@ -21,14 +21,19 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
-  { 'williamboman/mason.nvim', config = true, dependencies = {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-  } },
+  {
+    'mason-org/mason.nvim',
+    dependencies = {
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'mason-org/mason-lspconfig.nvim',
+      'neovim/nvim-lspconfig',
+    },
+  },
   { 'j-hui/fidget.nvim', opts = {} },
   {
     'saghen/blink.cmp',
     dependencies = 'rafamadriz/friendly-snippets',
-    version = '1.0.0',
+    version = '1.2.0',
     opts = {
       keymap = { preset = 'default' },
       appearance = {
@@ -382,18 +387,18 @@ require('which-key').add {
 local mason_packages = {
   lsps = {
     'gopls',
-    'rust-analyzer',
-    'typescript-language-server',
-    'html-lsp',
-    'lua-language-server',
+    'rust_analyzer',
+    'ts_ls',
+    'html',
+    'lua_ls',
     'ols',
     'clangd',
-    'json-lsp',
-    'astro-language-server',
+    'jsonls',
+    'astro',
     'phpactor',
-    'svelte-language-server',
+    'svelte',
     'omnisharp',
-    'terraform-ls',
+    'terraformls',
   },
   formatters = {
     'gofumpt',
@@ -420,10 +425,7 @@ require('mason-tool-installer').setup {
     :flatten()
     :totable(),
 }
-
-for _, server_name in ipairs(mason_packages.lsps) do
-  vim.lsp.enable(server_name)
-end
+require('mason-lspconfig').setup {}
 
 -- Razor files
 vim.filetype.add {
