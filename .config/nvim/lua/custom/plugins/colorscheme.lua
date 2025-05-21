@@ -102,9 +102,21 @@ return {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
-    enabled = true,
+    enabled = false,
     config = function()
       vim.cmd 'colorscheme catppuccin'
+    end,
+  },
+  {
+    'webhooked/kanso.nvim',
+    lazy = false,
+    priority = 1000,
+    enabled = true,
+    config = function()
+      require('kanso').setup {
+        theme = 'ink',
+      }
+      vim.cmd 'colorscheme kanso'
     end,
   },
 }
