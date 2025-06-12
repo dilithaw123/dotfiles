@@ -399,6 +399,8 @@ local mason_packages = {
     'svelte',
     'omnisharp',
     'terraformls',
+    'pyright',
+    'tofu-ls',
   },
   formatters = {
     'gofumpt',
