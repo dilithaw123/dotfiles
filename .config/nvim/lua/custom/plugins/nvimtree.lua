@@ -10,6 +10,9 @@ return {
       filters = {
         dotfiles = false,
       },
+      git = {
+        enable = false,
+      },
     }
     vim.api.nvim_set_keymap('n', '<Leader>ff', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
   end,
