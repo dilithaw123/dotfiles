@@ -1,8 +1,8 @@
 {
     "layer": "top",
     "position": "top",
-    //"modules-left": ["sway/workspaces","sway/mode","sway/scatchpad"],
-    "modules-left":["hyprland/workspaces"],
+    "modules-left": ["sway/workspaces","sway/mode","sway/scatchpad"],
+    //"modules-left":["hyprland/workspaces"],
     "modules-center": ["custom/music"],
     "modules-right": [
     	"pulseaudio", 

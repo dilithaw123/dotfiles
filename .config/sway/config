@@ -24,7 +24,7 @@ font FiraCode Nerd Font 10
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
-output * bg $HOME/Pictures/batman.jpg fill
+# output * bg $HOME/Pictures/batman.jpg fill
 #
 # Example configuration:
 #
