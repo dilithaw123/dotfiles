@@ -42,6 +42,12 @@ return {
     indent = {
       enabled = true,
     },
+    notify = {
+      enabled = true,
+    },
+    notifier = {
+      enabled = true,
+    },
     keys = {
       {
         '<leader>gg',

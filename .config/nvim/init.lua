@@ -33,7 +33,7 @@ require('lazy').setup({
   {
     'saghen/blink.cmp',
     dependencies = 'rafamadriz/friendly-snippets',
-    version = '1.6.0',
+    version = '1.7.0',
     opts = {
       keymap = { preset = 'default' },
       appearance = {
@@ -147,6 +147,7 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {})
 
+-- stylua: ignore start
 -- Set highlight on search
 vim.o.hlsearch = false
 -- Hybrid line numbers
@@ -222,6 +223,10 @@ vim.keymap.set('n', '<leader>gf', require('fzf-lua').git_files, { desc = 'Search
 vim.keymap.set('n', '<leader>sf', require('fzf-lua').files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sw', require('fzf-lua').grep_cword, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('fzf-lua').live_grep, { desc = '[S]earch by [G]rep' })
+-- Snacks
+vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Lazygit' })
+
+-- stylua: ignore end
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -318,6 +323,30 @@ vim.defer_fn(function()
   }
 end, 0)
 
+require('which-key').add {
+  { '<leader>c', group = '[C]ode' },
+  { '<leader>c_', hidden = true },
+  { '<leader>d', group = '[D]ocument' },
+  { '<leader>d_', hidden = true },
+  { '<leader>g', group = '[G]it' },
+  { '<leader>g_', hidden = true },
+  { '<leader>h', group = 'Git [H]unk' },
+  { '<leader>h_', hidden = true },
+  { '<leader>r', group = '[R]ename' },
+  { '<leader>r_', hidden = true },
+  { '<leader>s', group = '[S]earch' },
+  { '<leader>s_', hidden = true },
+  { '<leader>t', group = '[T]oggle' },
+  { '<leader>t_', hidden = true },
+  { '<leader>w', group = '[W]orkspace' },
+  { '<leader>w_', hidden = true },
+}
+
+require('which-key').add {
+  { '<leader>', group = 'VISUAL <leader>', mode = 'v' },
+  { '<leader>h', desc = 'Git [H]unk', mode = 'v' },
+}
+
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     local bufnr = vim.api.nvim_get_current_buf()
@@ -359,30 +388,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, { desc = 'Format current buffer with LSP' })
   end,
 })
-
-require('which-key').add {
-  { '<leader>c', group = '[C]ode' },
-  { '<leader>c_', hidden = true },
-  { '<leader>d', group = '[D]ocument' },
-  { '<leader>d_', hidden = true },
-  { '<leader>g', group = '[G]it' },
-  { '<leader>g_', hidden = true },
-  { '<leader>h', group = 'Git [H]unk' },
-  { '<leader>h_', hidden = true },
-  { '<leader>r', group = '[R]ename' },
-  { '<leader>r_', hidden = true },
-  { '<leader>s', group = '[S]earch' },
-  { '<leader>s_', hidden = true },
-  { '<leader>t', group = '[T]oggle' },
-  { '<leader>t_', hidden = true },
-  { '<leader>w', group = '[W]orkspace' },
-  { '<leader>w_', hidden = true },
-}
-
-require('which-key').add {
-  { '<leader>', group = 'VISUAL <leader>', mode = 'v' },
-  { '<leader>h', desc = 'Git [H]unk', mode = 'v' },
-}
 
 local mason_packages = {
   lsps = {

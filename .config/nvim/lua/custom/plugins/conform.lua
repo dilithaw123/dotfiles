@@ -5,6 +5,10 @@ return {
   config = function()
     local conform = require 'conform'
     conform.setup {
+      format_on_save = {
+        lsp_format = 'fallback',
+        timeout_ms = 1000,
+      },
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { 'prettierd' },
@@ -14,10 +18,6 @@ return {
         python = { 'black' },
         markdown = { 'prettierd' },
         json = { 'jq' },
-      },
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true,
       },
     }
   end,
