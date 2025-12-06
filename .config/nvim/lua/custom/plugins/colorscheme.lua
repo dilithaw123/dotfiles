@@ -46,9 +46,9 @@ return {
   },
   {
     'EdenEast/nightfox.nvim',
-    enabled = false,
+    enabled = true,
     config = function()
-      vim.cmd 'colorscheme dawnfox'
+      vim.cmd 'colorscheme nightfox'
     end,
   },
   {
@@ -86,23 +86,10 @@ return {
     end,
   },
   {
-    'scottmckendry/cyberdream.nvim',
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require('cyberdream').setup {
-        transparent = true,
-        italic_comments = true,
-      }
-      vim.cmd 'colorscheme cyberdream'
-    end,
-  },
-  {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
-    enabled = true,
+    enabled = false,
     config = function()
       vim.cmd 'colorscheme catppuccin'
     end,
