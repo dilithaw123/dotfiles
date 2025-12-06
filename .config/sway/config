@@ -19,7 +19,8 @@ set $term foot
 set $menu fuzzel
 
 # font FiraMono Nerd Font
-font FiraCode Nerd Font 10
+# font FiraCode Nerd Font 10
+font Noto Sans Mono 10
 
 ### Output configuration
 #
