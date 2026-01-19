@@ -3,6 +3,7 @@ vim.g.maplocalleader = ' '
 vim.opt.path:append '**'
 vim.opt.wildignorecase = true
 vim.opt.winborder = 'rounded'
+vim.opt.swapfile = false
 
 vim.pack.add {
   { src = 'https://github.com/tpope/vim-fugitive' },
@@ -364,7 +365,6 @@ local mason_packages = {
     'omnisharp',
     'terraformls',
     'pyright',
-    'tofu-ls',
   },
   formatters = {
     'gofumpt',
