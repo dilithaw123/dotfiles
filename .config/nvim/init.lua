@@ -1,151 +1,166 @@
--- NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.opt.path:append '**'
 vim.opt.wildignorecase = true
+vim.opt.winborder = 'rounded'
 
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
-    lazypath,
-  }
-end
-vim.opt.rtp:prepend(lazypath)
+vim.pack.add {
+  { src = 'https://github.com/tpope/vim-fugitive' },
+  { src = 'https://github.com/tpope/vim-rhubarb' },
+  { src = 'https://github.com/tpope/vim-sleuth' },
+  { src = 'https://github.com/stevearc/oil.nvim' },
+  { src = 'https://github.com/mason-org/mason.nvim' },
+  { src = 'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim' },
+  { src = 'https://github.com/mason-org/mason-lspconfig.nvim' },
+  { src = 'https://github.com/neovim/nvim-lspconfig' },
+  { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
+  { src = 'https://github.com/ibhagwan/fzf-lua' },
+  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range '1.8.0' },
+  { src = 'https://github.com/folke/which-key.nvim' },
+  { src = 'https://github.com/EdenEast/nightfox.nvim' },
+  { src = 'https://github.com/lewis6991/gitsigns.nvim' },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+  { src = 'https://github.com/akinsho/bufferline.nvim' },
+  { src = 'https://github.com/nvim-lualine/lualine.nvim' },
+  { src = 'https://github.com/stevearc/conform.nvim' },
+  { src = 'https://github.com/github/copilot.vim' },
+  { src = 'https://github.com/mfussenegger/nvim-lint' },
+  { src = 'https://github.com/nvim-tree/nvim-tree.lua' },
+  { src = 'https://github.com/akinsho/toggleterm.nvim' },
+  { src = 'https://github.com/folke/trouble.nvim' },
+  { src = 'https://github.com/kdheepak/lazygit.nvim' },
+}
 
-require('lazy').setup({
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
-  'tpope/vim-sleuth',
-  {
-    'mason-org/mason.nvim',
-    dependencies = {
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-      'mason-org/mason-lspconfig.nvim',
-      'neovim/nvim-lspconfig',
-    },
+-- Colorscheme
+vim.cmd 'colorscheme nightfox'
+
+-- Oil
+require('oil').setup {
+  default_file_explorer = true,
+  delete_to_trash = true,
+  view_options = {
+    show_hidden = true,
   },
-  { 'j-hui/fidget.nvim', opts = {} },
-  {
-    'saghen/blink.cmp',
-    dependencies = 'rafamadriz/friendly-snippets',
-    version = '1.7.0',
-    opts = {
-      keymap = { preset = 'default' },
-      appearance = {
-        use_nvim_cmp_as_default = true,
-        nerd_font_variant = 'mono',
-      },
-      sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
-      },
-      fuzzy = { implementation = 'prefer_rust_with_warning' },
-      completion = {
-        menu = {
-          draw = {
-            columns = {
-              { 'label', 'label_description', gap = 1 },
-              { 'kind_icon', 'kind', gap = 1 },
-            },
-          },
+}
+
+vim.keymap.set('n', '<leader>o', ':Oil<CR>', { desc = 'Open parent directory' })
+
+-- blink.cmp
+require('blink.cmp').setup {
+  keymap = { preset = 'default' },
+  appearance = {
+    use_nvim_cmp_as_default = true,
+    nerd_font_variant = 'mono',
+  },
+  sources = {
+    default = { 'lsp', 'path', 'snippets', 'buffer' },
+  },
+  fuzzy = {
+    implementation = 'lua',
+  },
+  completion = {
+    menu = {
+      draw = {
+        columns = {
+          { 'label', 'label_description', gap = 1 },
+          { 'kind_icon', 'kind', gap = 1 },
         },
       },
     },
-    opts_extend = { 'sources.default' },
   },
-  { 'folke/which-key.nvim', opts = {} },
-  {
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-      on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
+  opts_extend = { 'sources.default' },
+}
 
-        local function map(mode, l, r, opts)
-          opts = opts or {}
-          opts.buffer = bufnr
-          vim.keymap.set(mode, l, r, opts)
-        end
+-- Bufferline
+require('bufferline').setup {}
 
-        -- Navigation
-        map({ 'n', 'v' }, ']c', function()
-          if vim.wo.diff then
-            return ']c'
-          end
-          vim.schedule(function()
-            gs.next_hunk()
-          end)
-          return '<Ignore>'
-        end, { expr = true, desc = 'Jump to next hunk' })
-
-        map({ 'n', 'v' }, '[c', function()
-          if vim.wo.diff then
-            return '[c'
-          end
-          vim.schedule(function()
-            gs.prev_hunk()
-          end)
-          return '<Ignore>'
-        end, { expr = true, desc = 'Jump to previous hunk' })
-
-        -- Actions
-        -- visual mode
-        map('v', '<leader>hs', function()
-          gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end, { desc = 'stage git hunk' })
-        map('v', '<leader>hr', function()
-          gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end, { desc = 'reset git hunk' })
-        -- normal mode
-        map('n', '<leader>hs', gs.stage_hunk, { desc = 'git stage hunk' })
-        map('n', '<leader>hr', gs.reset_hunk, { desc = 'git reset hunk' })
-        map('n', '<leader>hS', gs.stage_buffer, { desc = 'git Stage buffer' })
-        map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
-        map('n', '<leader>hR', gs.reset_buffer, { desc = 'git Reset buffer' })
-        map('n', '<leader>hp', gs.preview_hunk, { desc = 'preview git hunk' })
-        map('n', '<leader>hb', function()
-          gs.blame_line { full = false }
-        end, { desc = 'git blame line' })
-        map('n', '<leader>hd', gs.diffthis, { desc = 'git diff against index' })
-        map('n', '<leader>hD', function()
-          gs.diffthis '~'
-        end, { desc = 'git diff against last commit' })
-
-        -- Toggles
-        map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = 'toggle git blame line' })
-        map('n', '<leader>td', gs.toggle_deleted, { desc = 'toggle git show deleted' })
-
-        -- Text object
-        map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select git hunk' })
-      end,
-    },
+-- Gitsigns
+require('gitsigns').setup {
+  signs = {
+    add = { text = '+' },
+    change = { text = '~' },
+    delete = { text = '_' },
+    topdelete = { text = '‾' },
+    changedelete = { text = '~' },
   },
-  {
-    'ibhagwan/fzf-lua',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    opts = {},
-  },
-  {
-    -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
-    build = ':TSUpdate',
-  },
+}
 
-  { import = 'custom.plugins' },
-}, {})
+-- Lualine
+require('lualine').setup {
+  options = {
+    icons_enabled = false,
+    theme = 'auto',
+    component_separators = '|',
+    section_separators = '',
+  },
+  sections = {
+    lualine_c = { { 'filename', file_status = true, path = 2 } },
+  },
+}
+
+-- Conform
+require('conform').setup {
+  format_on_save = {
+    lsp_format = 'fallback',
+    timeout_ms = 1000,
+  },
+  formatters_by_ft = {
+    lua = { 'stylua' },
+    javascript = { 'prettierd' },
+    typescript = { 'prettierd' },
+    go = { 'gofumpt', 'goimports' },
+    -- yaml = { 'yamlfmt' },
+    python = { 'black' },
+    markdown = { 'prettierd' },
+    json = { 'jq' },
+  },
+}
+
+-- Nvim lint
+require('lint').linters_by_ft = {
+  go = { 'golangcilint' },
+  typescript = { 'eslint_d' },
+  javascript = { 'eslint_d' },
+}
+vim.keymap.set('n', '<leader>ll', function()
+  require('lint').try_lint()
+end, { noremap = true, silent = true, desc = '[l]int this file' })
+
+-- Nvimtree
+require('nvim-tree').setup {
+  filters = {
+    dotfiles = false,
+  },
+  git = {
+    enable = false,
+  },
+}
+vim.api.nvim_set_keymap('n', '<Leader>ff', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+
+-- Toggleterm
+require('toggleterm').setup {
+  direction = 'float',
+  close_on_exit = true,
+}
+vim.keymap.set('n', '<leader>ft', '<cmd>ToggleTerm<cr>', { noremap = true, silent = true, desc = 'Toggle [T]erminal' })
+
+-- Trouble
+require('trouble').setup {}
+vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
+
+
+-- local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+-- if not vim.loop.fs_stat(lazypath) then
+--   vim.fn.system {
+--     'git',
+--     'clone',
+--     '--filter=blob:none',
+--     'https://github.com/folke/lazy.nvim.git',
+--     '--branch=stable', -- latest stable release
+--     lazypath,
+--   }
+-- end
+-- vim.opt.rtp:prepend(lazypath)
 
 -- stylua: ignore start
 -- Set highlight on search
@@ -224,104 +239,48 @@ vim.keymap.set('n', '<leader>sf', require('fzf-lua').files, { desc = '[S]earch [
 vim.keymap.set('n', '<leader>sw', require('fzf-lua').grep_cword, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('fzf-lua').live_grep, { desc = '[S]earch by [G]rep' })
 -- Snacks
-vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Lazygit' })
+vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<CR>', { desc = 'Launch [L]azy[G]it' })
 
 -- stylua: ignore end
 
--- [[ Configure Treesitter ]]
--- See `:help nvim-treesitter`
--- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
-vim.defer_fn(function()
-  require('nvim-treesitter.configs').setup {
-    -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = {
-      'c',
-      'cpp',
-      'go',
-      'lua',
-      'python',
-      'rust',
-      'tsx',
-      'javascript',
-      'typescript',
-      'vimdoc',
-      'vim',
-      'bash',
-      'zig',
-      'sql',
-      'terraform',
-      'html',
-      'c_sharp',
-      'markdown',
-      'php',
-      'razor',
-    },
+-- Treesitter
+require('nvim-treesitter').setup()
+require('nvim-treesitter').install {
+  'c',
+  'cpp',
+  'go',
+  'lua',
+  'python',
+  'rust',
+  'tsx',
+  'javascript',
+  'typescript',
+  'vimdoc',
+  'vim',
+  'bash',
+  'zig',
+  'sql',
+  'terraform',
+  'html',
+  'c_sharp',
+  'markdown',
+  'php',
+  'razor',
+}
 
-    -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-    auto_install = false,
-    -- Install languages synchronously (only applied to `ensure_installed`)
-    sync_install = false,
-    -- List of parsers to ignore installing
-    ignore_install = {},
-    -- You can specify additional Treesitter modules here: -- For example: -- playground = {--enable = true,-- },
-    modules = {},
-    highlight = { enable = true },
-    indent = { enable = true },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = '<c-space>',
-        node_incremental = '<c-space>',
-        scope_incremental = '<c-s>',
-        node_decremental = '<M-space>',
-      },
-    },
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-        keymaps = {
-          -- You can use the capture groups defined in textobjects.scm
-          ['aa'] = '@parameter.outer',
-          ['ia'] = '@parameter.inner',
-          ['af'] = '@function.outer',
-          ['if'] = '@function.inner',
-          ['ac'] = '@class.outer',
-          ['ic'] = '@class.inner',
-        },
-      },
-      move = {
-        enable = true,
-        set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = {
-          [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
-        },
-        goto_next_end = {
-          [']M'] = '@function.outer',
-          [']['] = '@class.outer',
-        },
-        goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
-        },
-        goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['<leader>a'] = '@parameter.inner',
-        },
-        swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
-        },
-      },
-    },
-  }
-end, 0)
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('tree-sitter-enable', { clear = true }),
+  callback = function(args)
+    local lang = vim.treesitter.language.get_lang(args.match)
+    if not lang then
+      return
+    end
+
+    if vim.treesitter.query.get(lang, 'highlights') then
+      vim.treesitter.start(args.buf)
+    end
+  end,
+})
 
 require('which-key').add {
   { '<leader>c', group = '[C]ode' },
@@ -421,6 +380,7 @@ local mason_packages = {
   },
 }
 
+-- Mason and Mason adjacent plugins
 require('mason').setup()
 require('mason-tool-installer').setup {
   ensure_installed = vim
