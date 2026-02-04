@@ -16,7 +16,7 @@ vim.pack.add {
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
   { src = 'https://github.com/ibhagwan/fzf-lua' },
-  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range '1.8.0' },
+  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range '1.9.0' },
   { src = 'https://github.com/folke/which-key.nvim' },
   { src = 'https://github.com/EdenEast/nightfox.nvim' },
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
@@ -57,7 +57,12 @@ require('blink.cmp').setup {
     default = { 'lsp', 'path', 'snippets', 'buffer' },
   },
   fuzzy = {
-    implementation = 'lua',
+    implementation = 'prefer_rust_with_warning',
+    prebuilt_binaries = {
+      download = true,
+      ignore_version_mismatch = true,
+      force_version = 'v1.9.0',
+    },
   },
   completion = {
     menu = {
@@ -69,7 +74,6 @@ require('blink.cmp').setup {
       },
     },
   },
-  opts_extend = { 'sources.default' },
 }
 
 -- Bufferline
@@ -103,7 +107,7 @@ require('lualine').setup {
 require('conform').setup {
   format_on_save = {
     lsp_format = 'fallback',
-    timeout_ms = 1000,
+    timeout_ms = 3000,
   },
   formatters_by_ft = {
     lua = { 'stylua' },
@@ -116,16 +120,6 @@ require('conform').setup {
     json = { 'jq' },
   },
 }
-
--- Nvim lint
-require('lint').linters_by_ft = {
-  go = { 'golangcilint' },
-  typescript = { 'eslint_d' },
-  javascript = { 'eslint_d' },
-}
-vim.keymap.set('n', '<leader>ll', function()
-  require('lint').try_lint()
-end, { noremap = true, silent = true, desc = '[l]int this file' })
 
 -- Nvimtree
 require('nvim-tree').setup {
@@ -365,6 +359,7 @@ local mason_packages = {
     'omnisharp',
     'terraformls',
     'pyright',
+    'sqlls',
   },
   formatters = {
     'gofumpt',
@@ -377,6 +372,7 @@ local mason_packages = {
   linters = {
     'golangci-lint',
     'eslint_d',
+    'sqlfluff',
   },
 }
 
@@ -401,3 +397,18 @@ vim.filetype.add {
     cshtml = 'razor',
   },
 }
+
+-- Nvim lint
+require('lint').linters_by_ft = {
+  go = { 'golangcilint' },
+  typescript = { 'eslint_d' },
+  javascript = { 'eslint_d' },
+  sql = { 'sqlfluff' },
+}
+vim.keymap.set('n', '<leader>ll', function()
+  require('lint').try_lint()
+end, { noremap = true, silent = true, desc = '[l]int this file' })
+
+vim.api.nvim_create_user_command('Update', function()
+  vim.pack.update()
+end, { desc = 'Update plugins' })

@@ -1,9 +1,9 @@
 {
   "plugins": {
     "blink.cmp": {
-      "rev": "820f1ddf634ec267412e403711bf74be26cac677",
+      "rev": "bc54f81b6d92f91dac06c77c3ffccec5291e98cd",
       "src": "https://github.com/saghen/blink.cmp",
-      "version": "1.8.0 - 1.8.0"
+      "version": "1.9.0 - 1.9.0"
     },
     "bufferline.nvim": {
       "rev": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3",
@@ -18,11 +18,11 @@
       "src": "https://github.com/github/copilot.vim"
     },
     "fzf-lua": {
-      "rev": "abe5ecafebb4e24feb162384d5f492431036e791",
+      "rev": "36d60dd59cd9bc0442352119fc0e45e1c9011e03",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "42d6aed4e94e0f0bbced16bbdcc42f57673bd75e",
+      "rev": "abf82a65f185bd54adc0679f74b7d6e1ada690c9",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "lazygit.nvim": {
@@ -34,11 +34,11 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mason-lspconfig.nvim": {
-      "rev": "80c0130c5f16b551865a69e832f1feadeedb5fbe",
+      "rev": "c953789db7fd28eafe5eb5659846d34b5024b3cc",
       "src": "https://github.com/mason-org/mason-lspconfig.nvim"
     },
     "mason-tool-installer.nvim": {
-      "rev": "517ef5994ef9d6b738322664d5fdd948f0fdeb46",
+      "rev": "443f1ef8b5e6bf47045cb2217b6f748a223cf7dc",
       "src": "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim"
     },
     "mason.nvim": {
@@ -46,7 +46,7 @@
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "mini.pick": {
-      "rev": "7a781e00aba1af54bd53a1d66d3ca8168a4a0dbb",
+      "rev": "7c0a674f620ddc701903b887b2dade836b23ea79",
       "src": "https://github.com/nvim-mini/mini.pick"
     },
     "nightfox.nvim": {
@@ -54,19 +54,19 @@
       "src": "https://github.com/EdenEast/nightfox.nvim"
     },
     "nvim-lint": {
-      "rev": "ca6ea12daf0a4d92dc24c5c9ae22a1f0418ade37",
+      "rev": "bcd1a44edbea8cd473af7e7582d3f7ffc60d8e81",
       "src": "https://github.com/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "92ee7d42320edfbb81f3cad851314ab197fa324a",
+      "rev": "3f58aeca0c6ece8a9fb8782ea3fcb6024f285be3",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-tree.lua": {
-      "rev": "ca8d82fff26cb12ced239713e3222f4a9dcd0da0",
+      "rev": "037d89e60fb01a6c11a48a19540253b8c72a3c32",
       "src": "https://github.com/nvim-tree/nvim-tree.lua"
     },
     "nvim-treesitter": {
-      "rev": "d9a5fb8484374e8ed5d88dd9e0475a760c168d6a",
+      "rev": "4967fa48b0fe7a7f92cee546c76bb4bb61bb14d5",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-textobjects": {
