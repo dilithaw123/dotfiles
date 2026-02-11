@@ -26,10 +26,10 @@ vim.pack.add {
   { src = 'https://github.com/stevearc/conform.nvim' },
   { src = 'https://github.com/github/copilot.vim' },
   { src = 'https://github.com/mfussenegger/nvim-lint' },
-  { src = 'https://github.com/nvim-tree/nvim-tree.lua' },
   { src = 'https://github.com/akinsho/toggleterm.nvim' },
   { src = 'https://github.com/folke/trouble.nvim' },
   { src = 'https://github.com/kdheepak/lazygit.nvim' },
+  { src = 'https://github.com/nvim-mini/mini.nvim' },
 }
 
 -- Colorscheme
@@ -121,16 +121,15 @@ require('conform').setup {
   },
 }
 
--- Nvimtree
-require('nvim-tree').setup {
-  filters = {
-    dotfiles = false,
-  },
-  git = {
-    enable = false,
+-- Mini.nvim
+require('mini.files').setup {
+  options = {
+    permanent_delete = false,
   },
 }
-vim.api.nvim_set_keymap('n', '<Leader>ff', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ff', function()
+  require('mini.files').open()
+end, { noremap = true, silent = true, desc = 'Open [F]iles' })
 
 -- Toggleterm
 require('toggleterm').setup {
@@ -402,12 +401,20 @@ vim.filetype.add {
 require('lint').linters_by_ft = {
   go = { 'golangcilint' },
   typescript = { 'eslint_d' },
+  typescriptreact = { 'eslint_d' },
   javascript = { 'eslint_d' },
+  javascriptreact = { 'eslint_d' },
   sql = { 'sqlfluff' },
 }
 vim.keymap.set('n', '<leader>ll', function()
   require('lint').try_lint()
 end, { noremap = true, silent = true, desc = '[l]int this file' })
+
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  callback = function()
+    require('lint').try_lint()
+  end,
+})
 
 vim.api.nvim_create_user_command('Update', function()
   vim.pack.update()
