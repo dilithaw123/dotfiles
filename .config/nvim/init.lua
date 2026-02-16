@@ -113,6 +113,8 @@ require('conform').setup {
     lua = { 'stylua' },
     javascript = { 'prettierd' },
     typescript = { 'prettierd' },
+    typescriptreact = { 'prettierd' },
+    javascriptreact = { 'prettierd' },
     go = { 'gofumpt', 'goimports' },
     -- yaml = { 'yamlfmt' },
     python = { 'black' },
