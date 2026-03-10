@@ -30,6 +30,7 @@ vim.pack.add {
   { src = 'https://github.com/folke/trouble.nvim' },
   { src = 'https://github.com/kdheepak/lazygit.nvim' },
   { src = 'https://github.com/nvim-mini/mini.nvim' },
+  { src = 'https://github.com/lervag/vimtex' },
 }
 
 -- Colorscheme
