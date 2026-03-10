@@ -26,3 +26,7 @@ fi
 if [[ -d "$HOME/.dotnet" ]]; then
 	PATH="$PATH:$HOME/.dotnet"
 fi
+
+if [[ -d "/usr/share/dotnet" ]]; then
+	PATH="$PATH:/usr/share/dotnet"
+fi
