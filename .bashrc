@@ -24,9 +24,11 @@ if [[ -d "$HOME/.local/bin/" ]]; then
 fi
 
 if [[ -d "$HOME/.dotnet" ]]; then
+	export DOTNET_ROOT=$HOME/.dotnet
 	PATH="$PATH:$HOME/.dotnet"
 fi
 
 if [[ -d "/usr/share/dotnet" ]]; then
+	export DOTNET_ROOT=/usr/share/dotnet
 	PATH="$PATH:/usr/share/dotnet"
 fi
