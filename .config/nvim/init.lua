@@ -392,6 +392,13 @@ require('mason-tool-installer').setup {
 }
 require('mason-lspconfig').setup {}
 
+vim.lsp.config.terraformls = {
+  root_markers = { { 'main.tf' }, { '.terraform' } },
+  on_attach = function(client)
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+}
+
 -- Razor files
 vim.filetype.add {
   extension = {
