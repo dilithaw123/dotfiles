@@ -104,26 +104,6 @@ require('lualine').setup {
   },
 }
 
--- Conform
-require('conform').setup {
-  format_on_save = {
-    lsp_format = 'fallback',
-    timeout_ms = 3000,
-  },
-  formatters_by_ft = {
-    lua = { 'stylua' },
-    javascript = { 'prettierd' },
-    typescript = { 'prettierd' },
-    typescriptreact = { 'prettierd' },
-    javascriptreact = { 'prettierd' },
-    go = { 'gofumpt', 'goimports' },
-    -- yaml = { 'yamlfmt' },
-    python = { 'black' },
-    markdown = { 'prettierd' },
-    json = { 'jq' },
-  },
-}
-
 -- Mini.nvim
 require('mini.files').setup {
   options = {
@@ -367,9 +347,9 @@ local mason_packages = {
     'gofumpt',
     'golines',
     'goimports',
-    'prettierd',
     'stylua',
     'yamlfmt',
+    'oxfmt',
   },
   linters = {
     'golangci-lint',
@@ -425,6 +405,25 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
     require('lint').try_lint()
   end,
 })
+
+-- Conform
+require('conform').setup {
+  format_on_save = {
+    lsp_format = 'fallback',
+    timeout_ms = 3000,
+  },
+  formatters_by_ft = {
+    lua = { 'stylua' },
+    javascript = { 'oxfmt' },
+    typescript = { 'oxfmt' },
+    typescriptreact = { 'oxfmt' },
+    javascriptreact = { 'oxfmt' },
+    go = { 'gofumpt', 'goimports' },
+    python = { 'black' },
+    markdown = { 'oxfmt' },
+    json = { 'jq' },
+  },
+}
 
 vim.api.nvim_create_user_command('Update', function()
   vim.pack.update()
