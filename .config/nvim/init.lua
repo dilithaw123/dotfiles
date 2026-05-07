@@ -335,13 +335,10 @@ local mason_packages = {
     'ols',
     'clangd',
     'jsonls',
-    'astro',
     'phpactor',
-    'svelte',
     'omnisharp',
     'terraformls',
     'pyright',
-    'sqlls',
   },
   formatters = {
     'gofumpt',
