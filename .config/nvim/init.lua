@@ -16,7 +16,7 @@ vim.pack.add {
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
   { src = 'https://github.com/ibhagwan/fzf-lua' },
-  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range '1.10.1' },
+  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range '1.10.2' },
   { src = 'https://github.com/folke/which-key.nvim' },
   { src = 'https://github.com/EdenEast/nightfox.nvim' },
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
@@ -62,7 +62,7 @@ require('blink.cmp').setup {
     prebuilt_binaries = {
       download = true,
       ignore_version_mismatch = true,
-      force_version = 'v1.10.1',
+      force_version = 'v1.10.2',
     },
   },
   completion = {
@@ -336,7 +336,7 @@ local mason_packages = {
     'clangd',
     'jsonls',
     'phpactor',
-    'omnisharp',
+    'roslyn_ls',
     'terraformls',
     'pyright',
   },
