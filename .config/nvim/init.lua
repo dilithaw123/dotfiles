@@ -15,26 +15,27 @@ vim.pack.add {
   { src = 'https://github.com/mason-org/mason-lspconfig.nvim' },
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
-  { src = 'https://github.com/ibhagwan/fzf-lua' },
   { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range '1.10.2' },
   { src = 'https://github.com/folke/which-key.nvim' },
-  { src = 'https://github.com/EdenEast/nightfox.nvim' },
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
   { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
   { src = 'https://github.com/akinsho/bufferline.nvim' },
   { src = 'https://github.com/nvim-lualine/lualine.nvim' },
   { src = 'https://github.com/stevearc/conform.nvim' },
-  { src = 'https://github.com/github/copilot.vim' },
+  -- { src = 'https://github.com/github/copilot.vim' },
   { src = 'https://github.com/mfussenegger/nvim-lint' },
   { src = 'https://github.com/akinsho/toggleterm.nvim' },
   { src = 'https://github.com/folke/trouble.nvim' },
   { src = 'https://github.com/kdheepak/lazygit.nvim' },
   { src = 'https://github.com/nvim-mini/mini.nvim' },
   { src = 'https://github.com/lervag/vimtex' },
+  { src = 'https://github.com/Verf/deepwhite.nvim' },
+  -- { src = 'https://github.com/EdenEast/nightfox.nvim' },
+  -- { src = 'https://github.com/rose-pine/neovim' },
 }
 
 -- Colorscheme
-vim.cmd 'colorscheme nightfox'
+vim.cmd [[colorscheme deepwhite]]
 
 -- Oil
 require('oil').setup {
@@ -114,6 +115,11 @@ vim.keymap.set('n', '<leader>ff', function()
   require('mini.files').open()
 end, { noremap = true, silent = true, desc = 'Open [F]iles' })
 
+require('mini.pick').setup()
+vim.keymap.set('n', '<leader>sf', '<cmd>Pick files<cr>', { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sg', '<cmd>Pick grep_live<cr>', { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader><space>', '<cmd>Pick buffers<cr>', { desc = '[ ] Find existing buffers' })
+
 -- Toggleterm
 require('toggleterm').setup {
   direction = 'float',
@@ -124,20 +130,6 @@ vim.keymap.set('n', '<leader>ft', '<cmd>ToggleTerm<cr>', { noremap = true, silen
 -- Trouble
 require('trouble').setup {}
 vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
-
-
--- local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
--- if not vim.loop.fs_stat(lazypath) then
---   vim.fn.system {
---     'git',
---     'clone',
---     '--filter=blob:none',
---     'https://github.com/folke/lazy.nvim.git',
---     '--branch=stable', -- latest stable release
---     lazypath,
---   }
--- end
--- vim.opt.rtp:prepend(lazypath)
 
 -- stylua: ignore start
 -- Set highlight on search
@@ -208,13 +200,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-vim.keymap.set('n', '<leader>?', require('fzf-lua').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('fzf-lua').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', require('fzf-lua').blines, { desc = '[/] Fuzzily search in current buffer' })
-vim.keymap.set('n', '<leader>gf', require('fzf-lua').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sf', require('fzf-lua').files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sw', require('fzf-lua').grep_cword, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('fzf-lua').live_grep, { desc = '[S]earch by [G]rep' })
 -- Snacks
 vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<CR>', { desc = 'Launch [L]azy[G]it' })
 
@@ -299,19 +284,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.buf.code_action { context = { only = { 'quickfix', 'refactor', 'source' } } }
     end, '[C]ode [A]ction')
 
-    nmap('gd', require('fzf-lua').lsp_definitions, '[G]oto [D]efinition')
-    nmap('gr', require('fzf-lua').lsp_references, '[G]oto [R]eferences')
-    nmap('gI', require('fzf-lua').lsp_implementations, '[G]oto [I]mplementation')
-    nmap('<leader>D', require('fzf-lua').lsp_typedefs, 'Type [D]efinition')
-    nmap('<leader>ds', require('fzf-lua').lsp_document_symbols, '[D]ocument [S]ymbols')
-    nmap('<leader>ws', require('fzf-lua').lsp_live_workspace_symbols, '[W]orkspace [S]ymbols')
-
     -- See `:help K` for why this keymap
     nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
     vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation' })
 
     -- Lesser used LSP functionality
-    nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+    nmap('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
+    nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+    nmap('gT', vim.lsp.buf.type_definition, '[G]oto [T]ype Definition')
+
     nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
     nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
     nmap('<leader>wl', function()
@@ -339,6 +321,7 @@ local mason_packages = {
     'roslyn_ls',
     'terraformls',
     'pyright',
+    'bicep-lsp',
   },
   formatters = {
     'gofumpt',
